@@ -11,7 +11,7 @@ class NewsQuery extends \yii\db\ActiveQuery
 {
     public function active()
     {
-        return $this->andWhere(['tatus' => true]);
+        return $this->andWhere(['active' => true]);
     }
 
     /**

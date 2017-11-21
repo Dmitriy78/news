@@ -13,6 +13,7 @@ return [
         
         'imageFiles' => [
             'class' => 'common\components\ImageFiles',
+            'alias' => '@frontend/',
             'attribute' => 'image',
             'folder_upload' => 'uploads',
             'folder_thumbs' => 'thumbs',

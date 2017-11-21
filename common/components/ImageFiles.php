@@ -21,6 +21,7 @@ class ImageFiles extends Component
     const TYPE_TIME    = 3; // текущее время
 
     public $attribute = 'image';
+    public $alias = '@frontend/';
     public $folder_upload = 'upload';
     public $folder_thumbs = 'thumbs';
     public $sep_postfix = 'x';
@@ -81,7 +82,7 @@ class ImageFiles extends Component
      * @return string
      */
     private function getPathFile($file) {
-        $basePath = Yii::getAlias('@frontend/' . $this->folder_upload);
+        $basePath = Yii::getAlias($this->alias . $this->folder_upload);
                 
         // upload/ или upload/post/
         $dir = !$this->entity_folder ? $basePath . '/' : $basePath . "/{$this->formName}/";
@@ -100,7 +101,7 @@ class ImageFiles extends Component
      * @return type
      */
     private function getPathThumbs($file = false) {
-        $dir =  Yii::getAlias('@frontend/' . $this->folder_upload) . "/{$this->folder_thumbs}/";
+        $dir =  Yii::getAlias($this->alias . $this->folder_upload) . "/{$this->folder_thumbs}/";
         
         if(!file_exists($dir)) {
             mkdir($dir,0755,TRUE);
