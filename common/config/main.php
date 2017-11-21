@@ -10,5 +10,14 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        
+        'imageFiles' => [
+            'class' => 'common\components\ImageFiles',
+            'attribute' => 'image',
+            'folder_upload' => 'uploads',
+            'folder_thumbs' => 'thumbs',
+            'entity_folder' => true,
+            'type_name' => 3,
+        ],
     ],
 ];
