@@ -15,9 +15,13 @@ use yii\db\ActiveRecord;
  * @property integer $active
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $count_attach
  */
 class News extends ActiveRecord
 {
+    public $attach;
+    public $count_attach;
+    
     /**
      * @inheritdoc
      */
@@ -50,6 +54,7 @@ class News extends ActiveRecord
             [['text'], 'string'],
             [['active', 'created_at', 'updated_at'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
+            [['attach', 'count_attach'], 'safe'],
         ];
     }
 
@@ -64,6 +69,8 @@ class News extends ActiveRecord
             'text' => 'Основной текст',
             'image' => 'Изображение',
             'active' => 'Активно',
+            'attach' => 'Файлы',
+            'count_attach' => 'Кол-во файлов',
             'created_at' => 'Создано',
             'updated_at' => 'Обновлено',
         ];
@@ -76,5 +83,27 @@ class News extends ActiveRecord
     public static function find()
     {
         return new \common\models\Query\NewsQuery(get_called_class());
+    }
+    
+//    public function afterFind() {
+//        parent::afterFind();
+//        
+//        $this->count_attach = $this->filesCount;
+//    }
+
+        /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFiles()
+    {
+        return $this->hasMany(Files::className(), ['owner_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFilesCount()
+    {
+        return $this->hasMany(Files::className(), ['owner_id' => 'id'])->count();
     }
 }

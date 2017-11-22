@@ -20,5 +20,13 @@ return [
             'entity_folder' => true,
             'type_name' => 3,
         ],
+        'files' => [
+            'class' => 'common\components\Files',
+            'alias' => '@frontend/',
+            'attribute' => 'attach',
+            'folder_upload' => 'uploads',
+            'entity_folder' => false,
+            'type_name' => 1,
+        ],
     ],
 ];

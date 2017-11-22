@@ -7,7 +7,8 @@ use common\models\News;
 use common\models\search\NewsSearch;
 use backend\controllers\BaseAdminController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use common\models\Files;
 
 /**
  * NewsController implements the CRUD actions for News model.
@@ -80,6 +81,7 @@ class NewsController extends BaseAdminController
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             Yii::$app->imageFiles->upload($model, 'image');
+            Yii::$app->files->upload($model, 'attach', 'owner');
             
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -139,6 +141,10 @@ class NewsController extends BaseAdminController
         return $this->redirect(['index']);
     }
     
+    /**
+     * 
+     * @return string
+     */
     public function actionDeleteImage()
     {
         $id = (int)\Yii::$app->request->post('key'); 
@@ -150,5 +156,42 @@ class NewsController extends BaseAdminController
             $model->updateAttributes(['image' => '']);
         }
         return '{}';
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function actionDeleteAttachFile()
+    {
+        //echo \yii\helpers\BaseVarDumper::dump(Yii::$app->request->post(), 10, true);  exit();
+        
+        $post = Yii::$app->request->post();
+        
+        $model = $this->findModel($post['owner_id']);
+        $file = Files::findOne(['id' => $post['key']]);
+        
+        if (Yii::$app->files->delete($file)) {
+            $file->delete();
+        
+            return '{}';
+        }
+        
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function actionFileUpload()
+    {
+        if (Yii::$app->request->isAjax) {
+            
+            $model = $this->findModel(Yii::$app->request->post('owner_id'));
+            
+            if (Yii::$app->files->upload($model, 'attach', 'owner')) {
+                return '{}';
+            }
+        } 
     }
 }

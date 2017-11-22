@@ -14,7 +14,7 @@ use kartik\file\FileInput;
 
 <div class="news-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -48,6 +48,44 @@ use kartik\file\FileInput;
     ]); ?>
 
     <?= $form->field($model, 'active')->checkbox() ?>
+    
+    <?php if (!$model->isNewRecord): ?>
+        
+        <?php 
+            
+            $initialPreview = [];
+            $initialPreviewConfig = [];
+            
+            foreach ($model->files as $file) {
+                $initialPreview[] = Html::a($file->title, Url::to([Yii::$app->files->getUrlFile($file->title)]));
+                
+                $initialPreviewConfig[] = [
+                    'url' => Url::to(['/news/delete-attach-file']),
+                    'key' => $file->id,
+                    'extra' => ['owner_id' => $model->id],
+                ];
+            }
+        ?>
+    
+        <?= $form->field($model, 'attach[]')->widget(FileInput::classname(), [
+            'options' => [
+                'multiple' => true, 
+                'accept' => 'application/pdf, application/zip, application/doc'
+            ],
+            'pluginOptions' => [
+                'previewFileType' => 'any',
+                'uploadUrl' => Url::to(['/news/file-upload']),
+                'allowedFileExtensions' => ['pdf','zip','doc'],
+                'uploadExtraData' => [
+                    'owner_id' => $model->id,
+                ],
+                'maxFileSize' => 4 * 1024,
+                
+                'initialPreview' => $initialPreview, 
+                'initialPreviewConfig' => $initialPreviewConfig,
+            ]
+        ]); ?>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

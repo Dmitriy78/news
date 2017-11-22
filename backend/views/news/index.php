@@ -32,7 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'title',
             [
-                'label' => 'Кол-во файлов',
+                'attribute' => 'count_attach',
+                'value' => function($model) {
+                    return $model->filesCount;
+                },
             ],
 //            'text:ntext',
 //            'image',

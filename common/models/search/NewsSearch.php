@@ -18,7 +18,7 @@ class NewsSearch extends News
     public function rules()
     {
         return [
-            [['id', 'active'], 'integer'],
+            [['id', 'active', 'count_attach'], 'integer'],
             [['title', 'text', 'image'], 'safe'],
             'createdDefault' => [['created_at', 'updated_at'], 'default', 'value' => null],
         ];
@@ -62,13 +62,20 @@ class NewsSearch extends News
         $query->andFilterWhere([
             'id' => $this->id,
             'active' => $this->active,
+//            'count_attach' => $this->count_attach,
 //            'created_at' => $this->created_at,
 //            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'text', $this->text]);
+//            ->andFilterWhere(['=', (new yii\db\Query())->select('id')->from('files')->where(['owner_id' => 5])->count(), $this->count_attach]);
 //            ->andFilterWhere(['like', 'image', $this->image]);
+        
+//        if ($this->count_attach) {
+//            $query->joinWith(['files'])
+//                 ->andFilterWhere(['=', 'COUNT(files.id) as count', $this->count_attach]);   
+//        }
         
         if ($this->created_at !== null) {
             $date = strtotime($this->created_at);

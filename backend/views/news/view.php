@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -41,6 +42,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'active:boolean',
             'created_at:datetime',
             'updated_at:datetime',
+            [
+                'attribute' => 'attach',
+                'format' => 'raw',
+                'value' => function($model) {
+        
+                    $list = [];
+                    foreach ($model->files as $file) {
+                        $list[] = Html::a($file->title, Url::to([Yii::$app->files->getUrlFile($file->title)]));
+                    }
+                    return implode('<br>', $list);
+                }
+            ]
+            
         ],
     ]) ?>
 
