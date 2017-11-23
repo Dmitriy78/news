@@ -76,7 +76,7 @@ class NewsSearch extends News
 //            $query->joinWith(['files'])
 //                 ->andFilterWhere(['=', 'COUNT(files.id) as count', $this->count_attach]);   
 //        }
-        
+                    
         if ($this->created_at !== null) {
             $date = strtotime($this->created_at);
             $query->andFilterWhere(['between', 'created_at', $date, $date + 3600 * 24]);
