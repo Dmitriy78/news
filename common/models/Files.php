@@ -58,6 +58,6 @@ class Files extends \yii\db\ActiveRecord
      */
     public function getOwner()
     {
-        return $this->hasOne(News::className(), ['id' => 'owner_id']);
+        return $this->hasOne(News::className(), ['id' => 'owner_id'])->inverseOf('files');
     }
 }

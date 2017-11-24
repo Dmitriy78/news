@@ -47,15 +47,15 @@ class Files extends Component
                 switch ($this->type_name) {
                     case self::TYPE_MD5     : $fileName = md5(uniqid(rand(),true)); break;
                     case self::TYPE_TIME    : $fileName = time(); break;
-                    default                 : $fileName = $file->baseName;
+                    default                 : $fileName = $this->getUniqueName($file->baseName, $file->extension);
                 }
-
+                
                 // новое имя файла с расширением
                 $fileName = implode('.', [$fileName, $file->extension]);
 
                 if($file->saveAs($this->getPathFile($fileName))) {
                     $attach = new Attach();
-                    $attach->title = implode('.', [$file->baseName, $file->extension]);
+                    $attach->title = $fileName;
                     $attach->ext = $file->extension;
                     $attach->size = $file->size;
                     $attach->link($name, $model);
@@ -67,6 +67,38 @@ class Files extends Component
     }
     
     /**
+     * Уникальное имя файла
+     * @param string $fileName
+     * @param string $extension
+     * @return string
+     */
+    public function getUniqueName($fileName, $extension) {
+        
+        if ( $this->checkName($fileName, $extension) ) {
+            return $fileName;
+        } else {
+            for ($suffix = 2; !$this->checkName($newFileName = $fileName . '-' . $suffix, $extension); $suffix++) {}
+            return $newFileName;
+        }
+    }
+    
+    /**
+     * Наличие файла в базе
+     * @param string $fileName
+     * @param string $extension
+     * @return boolean
+     */
+    public function checkName($fileName, $extension) {
+        
+        $model = Attach::find()
+                ->select('id')
+                ->where(['title' => implode('.', [$fileName, $extension])])
+                ->one(); 
+                
+        return  !$model;
+    }
+
+        /**
      * Путь к файлу
      * @param string $file
      * @return string
@@ -110,5 +142,15 @@ class Files extends Component
         }
         
         return $result;
+    }
+    
+    /**
+     * 
+     * @param File $model
+     */
+    public function deleteAttaches($model) {
+        foreach ($model->files as $file) {
+            $this->delete($file);
+        }
     }
 }

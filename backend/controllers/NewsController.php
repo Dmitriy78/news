@@ -7,7 +7,6 @@ use common\models\News;
 use common\models\search\NewsSearch;
 use backend\controllers\BaseAdminController;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 use common\models\Files;
 
 /**
@@ -106,6 +105,7 @@ class NewsController extends BaseAdminController
         
         if ($model) {
             Yii::$app->imageFiles->delete($model);
+            Yii::$app->files->deleteAttaches($model);
             $model->delete();
         }
         return $this->redirect(['index']);

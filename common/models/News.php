@@ -99,11 +99,4 @@ class News extends ActiveRecord
         return $this->hasMany(Files::className(), ['owner_id' => 'id']);
     }
     
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFilesCount()
-    {
-        return $this->hasMany(Files::className(), ['owner_id' => 'id'])->count();
-    }
 }
