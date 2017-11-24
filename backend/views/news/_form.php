@@ -22,8 +22,11 @@ use kartik\file\FileInput;
         'editorOptions' => ElFinder::ckeditorOptions(['elfinder'],[/* Some CKEditor Options */]),
     ]) ?>
 
-    <?php $initialPreview = $model->isNewRecord || !$model->image ? 
-            [] : [Html::img(Yii::$app->imageFiles->src($model, 200, 200), [])] ?>
+    <?php 
+        $initialPreview = $model->isNewRecord || !$model->image ? 
+        [] : 
+        [Html::img(Yii::$app->urlManagerFrontend->createAbsoluteUrl(Yii::$app->imageFiles->src($model, 200, 200), true))] 
+    ?>
         
     <?= $form->field($model, 'image')->widget(FileInput::classname(), [
         'options' => ['accept' => 'image/*'],
@@ -57,7 +60,11 @@ use kartik\file\FileInput;
             $initialPreviewConfig = [];
             
             foreach ($model->files as $file) {
-                $initialPreview[] = Html::a($file->title, Url::to([Yii::$app->files->getUrlFile($file->title)]));
+                $initialPreview[] = Html::a(
+                        $file->title,
+                        Yii::$app->urlManagerFrontend->createAbsoluteUrl(Yii::$app->files->getUrlFile($file->title))
+//                        Url::to([Yii::$app->files->getUrlFile($file->title)])
+                    );
                 
                 $initialPreviewConfig[] = [
                     'url' => Url::to(['/news/delete-attach-file']),

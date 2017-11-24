@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -36,8 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'image',
                 'format' => 'raw',
-                'value' => ($model->image)? Html::img(Yii::$app->imageFiles->src($model, 100), ['alt'=>'', 'title'=>''])
-                            : ''
+                'value' => ($model->image)? 
+                    Html::img(
+//                      Url::to([Yii::$app->imageFiles->src($model, 100)], true), ['alt'=>'', 'title'=>'']
+                        Yii::$app->urlManagerFrontend->createAbsoluteUrl(Yii::$app->imageFiles->src($model, 100), true)
+                    )
+                    : ''
             ],
             'active:boolean',
             'created_at:datetime',
@@ -49,7 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
         
                     $list = [];
                     foreach ($model->files as $file) {
-                        $list[] = Html::a($file->title, Url::to([Yii::$app->files->getUrlFile($file->title)]));
+                        $list[] = Html::a(
+                            $file->title, 
+                            Yii::$app->urlManagerFrontend->createAbsoluteUrl(Yii::$app->files->getUrlFile($file->title))
+                        );
                     }
                     return implode('<br>', $list);
                 }

@@ -5,4 +5,5 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'emailActivation' => false,
     'loginWithEmail' => true,
+    'appFrontend' => 'news'
 ];

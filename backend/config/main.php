@@ -44,6 +44,13 @@ return [
             'rules' => [
             ],
         ],
+        'urlManagerFrontend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => "//{$params['appFrontend']}",
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+        ],
         
     ],
     'params' => $params,
