@@ -14,11 +14,15 @@ use yii\db\ActiveRecord;
  * @property string $image
  * @property integer $active
  * @property integer $created_at
+ * @property boolean $draft
  * @property integer $updated_at
  * @property integer $count_attach
  */
 class News extends ActiveRecord
 {
+    const IS_DRAFT = 1;
+    const NOT_DRAFT = 0;
+
     public $attach;
     public $count_attach;
     
@@ -50,11 +54,11 @@ class News extends ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title'], 'required', 'on' => 'update'],
             [['text'], 'string'],
             [['active', 'created_at', 'updated_at'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
-            [['attach', 'count_attach'], 'safe'],
+            [['attach', 'count_attach', 'draft'], 'safe'],
         ];
     }
 
@@ -70,6 +74,7 @@ class News extends ActiveRecord
             'image' => 'Изображение',
             'active' => 'Активно',
             'attach' => 'Файлы',
+            'draft' => 'Черновик',
             'count_attach' => 'Кол-во файлов',
             'created_at' => 'Создано',
             'updated_at' => 'Обновлено',
@@ -97,6 +102,22 @@ class News extends ActiveRecord
     public function getFiles()
     {
         return $this->hasMany(Files::className(), ['owner_id' => 'id']);
+    }
+    
+    /**
+     * 
+     * @param type $insert
+     * @return boolean
+     */
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+           
+            $this->draft = $this->title ? self::NOT_DRAFT : self::IS_DRAFT;
+            
+            return true;
+        } else {
+            return false;
+        }
     }
     
 }

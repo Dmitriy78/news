@@ -9,10 +9,32 @@ namespace common\models\Query;
  */
 class NewsQuery extends \yii\db\ActiveQuery
 {
+    /**
+     * 
+     * @return type
+     */
     public function active()
     {
         return $this->andWhere(['active' => true]);
     }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function notDraft()
+    {
+        return $this->andWhere(['draft' => \common\models\News::NOT_DRAFT]);
+    }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function draft()
+    {
+        return $this->andWhere(['draft' => \common\models\News::IS_DRAFT]);
+    } 
 
     /**
      * @inheritdoc

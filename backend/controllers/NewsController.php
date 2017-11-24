@@ -22,6 +22,8 @@ class NewsController extends BaseAdminController
     {
         $searchModel = new NewsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $dataProvider->query->notDraft();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -46,15 +48,24 @@ class NewsController extends BaseAdminController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
-        $model = new News();
+        // создаем черновик
+        if (!$id) {
+            $model = new News();
+            $model->save();
+            return $this->redirect(['create', 'id' => $model->id]);
+        } 
         
+        $model = $this->findModel($id);
+        
+        $model->scenario = 'update';
         $model->active = true;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             Yii::$app->imageFiles->upload($model, 'image');
+            Yii::$app->files->upload($model, 'attach', 'owner');
             
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -76,6 +87,8 @@ class NewsController extends BaseAdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        $model->scenario = 'update';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
