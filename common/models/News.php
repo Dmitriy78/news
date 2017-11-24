@@ -106,6 +106,14 @@ class News extends ActiveRecord
     
     /**
      * 
+     * @return type
+     */
+    public function attributes() {
+        return array_merge(parent::attributes(), ['count_attach']);;
+    }
+
+    /**
+     * 
      * @param type $insert
      * @return boolean
      */

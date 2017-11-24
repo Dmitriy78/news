@@ -34,7 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'count_attach',
                 'value' => function($model) {
-                    return $model->getFiles()->count();
+//                    return $model->getFiles()->count();
+                    return count($model->files);
                 },
             ],
 //            'text:ntext',

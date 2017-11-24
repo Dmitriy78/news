@@ -47,8 +47,18 @@ class NewsSearch extends News
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query->joinWith(['files'])
+                        ->select([
+                            'news.id', 
+                            'news.title', 
+                            'news.active', 
+                            'news.created_at', 
+                            'news.updated_at', 
+                            'count(files.id) as count_attach'])
+                        ->groupBy('news.id'),
         ]);
+        
+        $dataProvider->sort->attributes['count_attach'];
 
         $this->load($params);
 
@@ -62,20 +72,21 @@ class NewsSearch extends News
         $query->andFilterWhere([
             'id' => $this->id,
             'active' => $this->active,
-//            'count_attach' => $this->count_attach,
 //            'created_at' => $this->created_at,
 //            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'text', $this->text]);
-//            ->andFilterWhere(['=', (new yii\db\Query())->select('id')->from('files')->where(['owner_id' => 5])->count(), $this->count_attach]);
-//            ->andFilterWhere(['like', 'image', $this->image]);
         
-//        if ($this->count_attach) {
-//            $query->joinWith(['files'])
-//                 ->andFilterWhere(['=', 'COUNT(files.id) as count', $this->count_attach]);   
-//        }
+        if (isset($this->count_attach) && $this->count_attach >= 0 && $this->count_attach !== '') {
+            
+            $query->having([
+                '=',
+                'count_attach',
+                $this->count_attach
+            ]);
+        }
                     
         if ($this->created_at !== null) {
             $date = strtotime($this->created_at);
