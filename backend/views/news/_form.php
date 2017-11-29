@@ -23,8 +23,7 @@ use kartik\file\FileInput;
     ]) ?>
 
     <?php 
-        $initialPreview = $model->isNewRecord || !$model->image ? 
-        [] : 
+        $initialPreview = $model->isNewRecord || !$model->image ? [] : 
         [Html::img(Yii::$app->urlManagerFrontend->createAbsoluteUrl(Yii::$app->imageFiles->src($model, 200, 200), true))] 
     ?>
         

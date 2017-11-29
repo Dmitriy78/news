@@ -34,7 +34,7 @@ class ImageFiles extends Component
     private $formName;
 
     /**
-     * Загрузка файла
+     * @brief Загрузка файла
      * @param Model $model
      * @param string $attribute
      */
@@ -77,7 +77,7 @@ class ImageFiles extends Component
     }
     
     /**
-     * Путь к файлу
+     * @brief Путь к файлу
      * @param string $file
      * @return string
      */
@@ -96,7 +96,7 @@ class ImageFiles extends Component
     }
     
     /**
-     * Путь к файлу thumb
+     * @brief Путь к файлу thumb
      * @param string $file
      * @return type
      */
@@ -112,7 +112,7 @@ class ImageFiles extends Component
     }
 
     /**
-     * Удаление файла
+     * @brief Удаление файла
      * @param Model $model
      * @param string $attribute
      * @param bool $isChange
@@ -148,7 +148,7 @@ class ImageFiles extends Component
     }
     
     /**
-     * Путь к файлу
+     * @brief Путь к файлу
      * @param Model $model
      * @param integer $width
      * @param integer $height
@@ -185,7 +185,7 @@ class ImageFiles extends Component
     }
     
     /**
-     * Ссылка на файл
+     * @brief Ссылка на файл
      * @param type $formName
      * @return type
      * /upload/ || /upload/post
@@ -198,7 +198,7 @@ class ImageFiles extends Component
     }
     
     /**
-     * Ссылка на файл thumb
+     * @brief Ссылка на файл thumb
      * @return type
      * /upload/thumbs/
      */
@@ -207,7 +207,7 @@ class ImageFiles extends Component
     }
 
     /**
-     * Формирует имя файла thumb
+     * @brief Формирует имя файла thumb
      * @param type $image
      * @param type $width
      * @param type $height
@@ -231,7 +231,7 @@ class ImageFiles extends Component
     } 
 
     /**
-     * Постфикс для файла. 
+     * @brief Постфикс для файла. 
      * @param integer $width
      * @param integer $height
      * @return string
@@ -245,7 +245,7 @@ class ImageFiles extends Component
     }
     
     /**
-     * 
+     * @brief Изменение размера изображения
      * @param type $image
      * @param type $width
      * @param type $height
@@ -288,7 +288,7 @@ class ImageFiles extends Component
     
     /**
      *  
-     * возвразает объект Image кропнутой картинки 
+     * @brief Возвращает объект Image кропнутой картинки 
      * @param object $image путь до оригинальной картинки   
      * @return Image object
      */      

@@ -141,7 +141,7 @@ class NewsController extends BaseAdminController
     }
     
     /**
-     * 
+     * @brief Изменяет статус
      * @param type $id
      * @return type
      */
@@ -155,7 +155,7 @@ class NewsController extends BaseAdminController
     }
     
     /**
-     * 
+     * @brief Ajax Удаление изображения
      * @return string
      */
     public function actionDeleteImage()
@@ -172,7 +172,7 @@ class NewsController extends BaseAdminController
     }
     
     /**
-     * 
+     * @brief Ajax Удаление прикрепленного файла
      * @return string
      */
     public function actionDeleteAttachFile()
@@ -193,7 +193,7 @@ class NewsController extends BaseAdminController
     }
 
     /**
-     * 
+     * @brief Ajax Загрузка прикрепленного файла
      * @return string
      */
     public function actionFileUpload()

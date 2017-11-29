@@ -34,6 +34,10 @@ class News extends ActiveRecord
         return 'news';
     }
     
+    /**
+     * 
+     * @return type
+     */
     public function behaviors()
     {
         return [
@@ -90,13 +94,7 @@ class News extends ActiveRecord
         return new \common\models\Query\NewsQuery(get_called_class());
     }
     
-//    public function afterFind() {
-//        parent::afterFind();
-//        
-//        $this->count_attach = $this->filesCount;
-//    }
-
-        /**
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getFiles()

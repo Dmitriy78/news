@@ -83,14 +83,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             $title = 'Опубликовать';
                         }
                         return Html::a('<span class="'. $icon .'"></span>', 
-                        Url::to(['/news/change-active', 'id' => $model->id]),
-                        [
-                            'title' => $title,
-                            'aria-label' => $title,
-                            'data-method' => 'post',
-                            'data-confirm' => 'Вы уверены, что хотите изменить статус?',
-                            'data-pjax' => 0              
-                        ]);
+                            Url::to(['/news/change-active', 'id' => $model->id]),
+                            [
+                                'title' => $title,
+                                'aria-label' => $title,
+                                'data-method' => 'post',
+                                'data-confirm' => 'Вы уверены, что хотите изменить статус?',
+                                'data-pjax' => 0              
+                            ]
+                        );
                     }
                 ],
             ],

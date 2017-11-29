@@ -10,7 +10,7 @@ namespace common\models\Query;
 class NewsQuery extends \yii\db\ActiveQuery
 {
     /**
-     * 
+     * @brief Активные записи
      * @return type
      */
     public function active()
@@ -19,7 +19,7 @@ class NewsQuery extends \yii\db\ActiveQuery
     }
     
     /**
-     * 
+     * @brief Не черновик
      * @return type
      */
     public function notDraft()
@@ -28,7 +28,7 @@ class NewsQuery extends \yii\db\ActiveQuery
     }
     
     /**
-     * 
+     * @brief Черновик
      * @return type
      */
     public function draft()

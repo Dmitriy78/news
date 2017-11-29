@@ -29,7 +29,7 @@ class Files extends Component
     private $formName;
     
     /**
-     * Загрузка файла
+     * @brief Загрузка файла
      * @param Model $model
      * @param string $attribute
      */
@@ -67,7 +67,7 @@ class Files extends Component
     }
     
     /**
-     * Уникальное имя файла
+     * @brief Уникальное имя файла
      * @param string $fileName
      * @param string $extension
      * @return string
@@ -83,7 +83,7 @@ class Files extends Component
     }
     
     /**
-     * Наличие файла в базе
+     * @brief Наличие файла в базе
      * @param string $fileName
      * @param string $extension
      * @return boolean
@@ -98,8 +98,8 @@ class Files extends Component
         return  !$model;
     }
 
-        /**
-     * Путь к файлу
+    /**
+     * @brief Путь к файлу
      * @param string $file
      * @return string
      */
@@ -118,7 +118,7 @@ class Files extends Component
     }
     
     /**
-     * Ссылка на прикрепленный файл
+     * @brief Ссылка на прикрепленный файл
      * @param type $file
      * @return string
      */
@@ -127,7 +127,7 @@ class Files extends Component
     }
     
     /**
-     * 
+     * @brief Удаление файла
      * @param type $model
      * @return boolean
      */
@@ -145,7 +145,7 @@ class Files extends Component
     }
     
     /**
-     * 
+     * @brief Удаление всех прикрепленных файлов
      * @param File $model
      */
     public function deleteAttaches($model) {
